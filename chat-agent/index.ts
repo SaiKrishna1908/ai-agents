@@ -11,30 +11,23 @@ if (!userMessage) {
   process.exit(1)
 }
 
-// give it a tool
-// const getWeather = async () => 'its hot, 89 deg'
-
 const weatherTool = {
-  name: 'get_stuff',
-  description: `use this to get weather`,
+  name: 'get_weather',
+  description: `use this to get weather, location is optional`,
   parameters: z.object({
-    reasoning: z.string().describe("why did you pick this tool>")
+    reasoning: z.string().describe("why did you pick this tool?")
   })
 }
 
+const weatherByCityNameTool = {
+  name: 'get_weather_by_city_name',
+  description: `use this to get weather when a city name is available`,
+  parameters: z.object({
+    reasoning: z.string().describe("why did you pick this tool?"),
+    city: z.string().describe("extract city name from the prompt")
+  })
+}
 
-const response = await runAgent({userMessage, tools: [weatherTool]})
+const response = await runAgent({userMessage, tools: [weatherTool, weatherByCityNameTool]})
 
 console.log(response)
-
-// await addMessages([{ role: 'user', content: userMessage }])
-// const messages = await getMessages()
-
-// const response = await runLLM({
-//   messages: [...messages, { role: 'user', content: userMessage }],
-//   tools: [],
-// })
-
-// console.log(response)
-
-// await addMessages([{ role: 'assistant', content: response }])

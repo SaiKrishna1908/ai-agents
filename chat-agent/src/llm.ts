@@ -13,5 +13,6 @@ export const runLLM = async ({ messages, tools }: { messages: AIMessage[], tools
     parallel_tool_calls: false
   })
 
+  console.log(`response from llm: ${response}`)
   return response.choices[0].message
 }
